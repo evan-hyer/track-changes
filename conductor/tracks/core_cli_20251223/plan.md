@@ -30,7 +30,7 @@
 
 ## Phase 3: Metadata Query Implementation
 
-- [ ] Task: Define Data Model - Write Tests
+- [~] Task: Define Data Model - Write Tests
     -   **Description:** Define interfaces for `MetadataChange` (name, type, user, date). Write a test for a transformation function that maps raw SOQL results (mocked) to this interface.
     -   **Validation:** Test fails.
 
