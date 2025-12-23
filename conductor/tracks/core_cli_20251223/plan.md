@@ -20,7 +20,7 @@
     -   **Description:** Install `@salesforce/core` and `@salesforce/sf-plugins-core`. These are essential for auth and plugin behavior.
     -   **Validation:** Dependencies listed in `package.json`.
 
-- [ ] Task: Implement Org Connection Service - Write Tests
+- [~] Task: Implement Org Connection Service - Write Tests
     -   **Description:** Write a test that mocks `@salesforce/core`'s `Org.create` and `Connection` to verify that the service can resolve a target org.
     -   **Validation:** Test fails (TDD).
 
