@@ -16,7 +16,7 @@
 
 ## Phase 2: Salesforce Integration Foundation
 
-- [~] Task: Install Salesforce Dependencies
+- [x] Task: Install Salesforce Dependencies 8f79858
     -   **Description:** Install `@salesforce/core` and `@salesforce/sf-plugins-core`. These are essential for auth and plugin behavior.
     -   **Validation:** Dependencies listed in `package.json`.
 
