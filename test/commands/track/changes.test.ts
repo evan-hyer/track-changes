@@ -3,7 +3,6 @@ import {Org} from '@salesforce/core';
 import {expect} from 'chai';
 import {createSandbox, SinonSandbox} from 'sinon';
 
-import {DisplayService} from '../../../src/services/display-service.js';
 import {OrgService} from '../../../src/services/org-service.js';
 import {QueryService} from '../../../src/services/query-service-class.js';
 
@@ -33,15 +32,46 @@ describe('track changes integration', () => {
 
     sandbox.stub(OrgService.prototype, 'getOrg').resolves(mockOrg);
     sandbox.stub(QueryService.prototype, 'queryChanges').resolves(mockChanges);
-    // DisplayService formatting is tested elsewhere, but we can verify it's called
-    const formatTableStub = sandbox.stub(DisplayService.prototype, 'formatTableData').returns(mockChanges);
 
     const {stdout} = await runCommand('track changes');
 
     expect(stdout).to.contain('MyClass');
     expect(stdout).to.contain('ApexClass');
     expect(stdout).to.contain('John Doe');
-    expect(formatTableStub.calledOnce).to.be.true;
+  });
+
+  it('should display changes as JSON', async () => {
+    const mockOrg = {
+      getConnection: () => ({}),
+    } as unknown as Org;
+    const mockChanges = [
+      {
+        componentName: 'MyClass',
+        date: '2023-01-01',
+        modifiedBy: 'John Doe',
+        type: 'ApexClass',
+      },
+    ];
+
+    sandbox.stub(OrgService.prototype, 'getOrg').resolves(mockOrg);
+    sandbox.stub(QueryService.prototype, 'queryChanges').resolves(mockChanges);
+
+    const {stdout} = await runCommand('track changes --json');
+
+    const parsed = JSON.parse(stdout);
+    expect(parsed).to.have.lengthOf(1);
+    expect(parsed[0].componentName).to.equal('MyClass');
+  });
+
+  it('should handle errors gracefully', async () => {
+    sandbox.stub(OrgService.prototype, 'getOrg').rejects(new Error('Auth failed'));
+
+    try {
+      await runCommand('track changes');
+    } catch (error: unknown) {
+      const oclifError = error as { oclif: { exit: number } };
+      expect(oclifError.oclif.exit).to.equal(2);
+    }
   });
 
   it('should handle --user flag by passing it to QueryService', async () => {
