@@ -1,6 +1,7 @@
 import {expect} from 'chai';
-import {MetadataChange} from '../../src/services/query-service.js';
+
 import {DisplayService} from '../../src/services/display-service.js';
+import {MetadataChange} from '../../src/services/query-service.js';
 
 describe('DisplayService', () => {
   let displayService: DisplayService;
@@ -12,9 +13,9 @@ describe('DisplayService', () => {
   const mockChanges: MetadataChange[] = [
     {
       componentName: 'MyClass',
-      type: 'ApexClass',
-      modifiedBy: 'John Doe',
       date: '2023-01-01T10:00:00Z',
+      modifiedBy: 'John Doe',
+      type: 'ApexClass',
     },
   ];
 

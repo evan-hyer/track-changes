@@ -1,15 +1,27 @@
 import {MetadataChange} from './query-service.js';
 
+/**
+ * Service to handle CLI output display formatting.
+ */
 export class DisplayService {
+  /**
+   * Formats the changes as a JSON string.
+   *
+   * @param changes - The list of metadata changes.
+   * @returns A JSON string representation of the changes.
+   */
   public formatJson(changes: MetadataChange[]): string {
-    throw new Error(`Not implemented: ${changes.length}`);
+    return JSON.stringify(changes, null, 2);
   }
 
+  /**
+   * Returns the changes formatted for table display.
+   * For MVP, this just returns the original array.
+   *
+   * @param changes - The list of metadata changes.
+   * @returns The list of metadata changes.
+   */
   public formatTableData(changes: MetadataChange[]): MetadataChange[] {
-    throw new Error(`Not implemented: ${changes.length}`);
-  }
-
-  public display(changes: MetadataChange[], json: boolean): void {
-    throw new Error(`Not implemented: ${changes.length}, ${json}`);
+    return changes;
   }
 }
