@@ -2,7 +2,7 @@
 
 ## Phase 1: Project Initialization
 
-- [ ] Task: Initialize `oclif` project
+- [~] Task: Initialize `oclif` project
     -   **Description:** Generate a new single-command `oclif` project using `npx oclif generate`. Configure it for TypeScript.
     -   **Validation:** Run `./bin/run --version` to verify the CLI executes.
 
