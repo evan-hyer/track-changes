@@ -14,7 +14,7 @@
     -   **Description:** Ensure Jest or Mocha is set up correctly with TypeScript support. Configure coverage reporting to enforce the 80% threshold.
     -   **Validation:** Run `npm test` and verify a sample test passes with coverage report.
 
-## Phase 2: Salesforce Integration Foundation
+## Phase 2: Salesforce Integration Foundation [checkpoint: 465693a]
 
 - [x] Task: Install Salesforce Dependencies 8f79858
     -   **Description:** Install `@salesforce/core` and `@salesforce/sf-plugins-core`. These are essential for auth and plugin behavior.
