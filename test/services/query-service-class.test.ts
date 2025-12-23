@@ -1,6 +1,7 @@
 import {Connection} from '@salesforce/core';
 import {expect} from 'chai';
 import {createSandbox, SinonSandbox, SinonStub} from 'sinon';
+
 import {QueryService} from '../../src/services/query-service-class.js';
 import {SourceMember} from '../../src/services/query-service.js';
 
@@ -26,17 +27,17 @@ describe('QueryService Class', () => {
   it('should query SourceMembers and return mapped MetadataChanges', async () => {
     const mockSourceMembers: SourceMember[] = [
       {
+        ChangedBy: {Name: 'Test User'},
         MemberName: 'MyClass',
         MemberType: 'ApexClass',
         RevisionNum: 1,
-        ChangedBy: {Name: 'Test User'},
         SystemModstamp: '2023-01-01T10:00:00.000+0000',
       },
     ];
 
     (mockConnection.tooling.query as SinonStub).resolves({
-      records: mockSourceMembers,
       done: true,
+      records: mockSourceMembers,
       totalSize: 1,
     });
 
@@ -53,8 +54,8 @@ describe('QueryService Class', () => {
 
    it('should filter by username if provided', async () => {
      (mockConnection.tooling.query as SinonStub).resolves({
-      records: [],
       done: true,
+      records: [],
       totalSize: 0,
     });
 

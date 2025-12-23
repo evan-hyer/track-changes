@@ -1,10 +1,22 @@
 import {Connection} from '@salesforce/core';
-import {MetadataChange} from './query-service.js';
+
+import {mapSourceMemberToChange, MetadataChange, SourceMember} from './query-service.js';
 
 export class QueryService {
   constructor(private connection: Connection) {}
 
   public async queryChanges(username?: string): Promise<MetadataChange[]> {
-    throw new Error(`Not implemented. Connection: ${this.connection}, Username: ${username}`);
+    let query = 'SELECT MemberName, MemberType, RevisionNum, ChangedBy.Name, SystemModstamp FROM SourceMember';
+    
+    if (username) {
+      query += ` WHERE ChangedBy.Name = '${username}'`;
+    }
+
+    const result = await this.connection.tooling.query<SourceMember>(query);
+    
+    // Check if records is undefined or null, and default to empty array if so.
+    const records = result.records || [];
+    
+    return records.map((record) => mapSourceMemberToChange(record));
   }
 }

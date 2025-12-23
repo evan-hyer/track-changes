@@ -42,7 +42,7 @@
     -   **Description:** Write tests mocking the `Connection.tooling.query` method. The query should target `SourceMember` and select `MemberName`, `MemberType`, `RevisionNum`, `ChangedBy` (User.Name), and `SystemModstamp`.
     -   **Validation:** Test fails.
 
-- [ ] Task: Implement SourceMember Query - Implementation
+- [~] Task: Implement SourceMember Query - Implementation
     -   **Description:** Implement the query logic. Handle cases where `SourceMember` might be empty. *Note: SourceMember is typically only populated in source-tracked orgs (scratch orgs/sandboxes).*
     -   **Validation:** Tests pass.
 
