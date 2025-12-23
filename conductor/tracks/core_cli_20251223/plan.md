@@ -52,7 +52,7 @@
     -   **Description:** Write tests for the command class verifying that flags `--user` and `--json` are parsed correctly.
     -   **Validation:** Test fails.
 
-- [~] Task: Implement Command Flags - Implementation
+- [x] Task: Implement Command Flags - Implementation 8000873
     -   **Description:** Define the `flags` in the `oclif` command class.
     -   **Validation:** Tests pass.
 
