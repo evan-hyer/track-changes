@@ -60,7 +60,7 @@
     -   **Description:** Write tests for a `DisplayService` that takes `MetadataChange[]` and formats it into a table string or JSON string.
     -   **Validation:** Test fails.
 
-- [~] Task: Implement Display Logic - Implementation
+- [x] Task: Implement Display Logic - Implementation e6d8cb7
     -   **Description:** Use `oclif/table` (or similar) to render the CLI table. Implement JSON serialization for `--json`.
     -   **Validation:** Tests pass.
 
