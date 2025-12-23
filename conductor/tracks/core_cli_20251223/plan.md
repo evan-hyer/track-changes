@@ -48,7 +48,7 @@
 
 ## Phase 4: CLI Command & Output
 
-- [~] Task: Implement Command Flags - Write Tests
+- [x] Task: Implement Command Flags - Write Tests e708b16
     -   **Description:** Write tests for the command class verifying that flags `--user` and `--json` are parsed correctly.
     -   **Validation:** Test fails.
 
