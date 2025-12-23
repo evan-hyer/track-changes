@@ -24,7 +24,7 @@
     -   **Description:** Write a test that mocks `@salesforce/core`'s `Org.create` and `Connection` to verify that the service can resolve a target org.
     -   **Validation:** Test fails (TDD).
 
-- [~] Task: Implement Org Connection Service - Implementation
+- [x] Task: Implement Org Connection Service - Implementation cda11c6
     -   **Description:** Create a service/class that utilizes `@salesforce/core` to initialize an Org connection. It should default to the workspace default org if no flag is provided.
     -   **Validation:** Tests pass.
 
