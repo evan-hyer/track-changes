@@ -64,7 +64,7 @@
     -   **Description:** Use `oclif/table` (or similar) to render the CLI table. Implement JSON serialization for `--json`.
     -   **Validation:** Tests pass.
 
-- [~] Task: Wire Up Command - Write Tests
+- [x] Task: Wire Up Command - Write Tests f086565
     -   **Description:** Write an integration test (mocked) for the `run()` method of the command. It should call the Org Service, Query Service, and Display Service in order.
     -   **Validation:** Test fails.
 
