@@ -28,7 +28,7 @@
     -   **Description:** Create a service/class that utilizes `@salesforce/core` to initialize an Org connection. It should default to the workspace default org if no flag is provided.
     -   **Validation:** Tests pass.
 
-## Phase 3: Metadata Query Implementation
+## Phase 3: Metadata Query Implementation [checkpoint: fb48eab]
 
 - [x] Task: Define Data Model - Write Tests 0d27979
     -   **Description:** Define interfaces for `MetadataChange` (name, type, user, date). Write a test for a transformation function that maps raw SOQL results (mocked) to this interface.
