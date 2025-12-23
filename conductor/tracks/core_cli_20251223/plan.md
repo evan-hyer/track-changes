@@ -68,7 +68,7 @@
     -   **Description:** Write an integration test (mocked) for the `run()` method of the command. It should call the Org Service, Query Service, and Display Service in order.
     -   **Validation:** Test fails.
 
-- [~] Task: Wire Up Command - Implementation
+- [x] Task: Wire Up Command - Implementation fd1433a
     -   **Description:** Orchestrate the services within the `run()` method. Apply filtering logic if the `--user` flag is present.
     -   **Validation:** Tests pass.
 
