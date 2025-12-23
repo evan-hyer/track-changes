@@ -38,7 +38,7 @@
     -   **Description:** Implement the interfaces and transformation logic.
     -   **Validation:** Tests pass.
 
-- [~] Task: Implement SourceMember Query - Write Tests
+- [x] Task: Implement SourceMember Query - Write Tests b3c9299
     -   **Description:** Write tests mocking the `Connection.tooling.query` method. The query should target `SourceMember` and select `MemberName`, `MemberType`, `RevisionNum`, `ChangedBy` (User.Name), and `SystemModstamp`.
     -   **Validation:** Test fails.
 
