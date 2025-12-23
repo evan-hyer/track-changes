@@ -56,7 +56,7 @@
     -   **Description:** Define the `flags` in the `oclif` command class.
     -   **Validation:** Tests pass.
 
-- [~] Task: Implement Display Logic - Write Tests
+- [x] Task: Implement Display Logic - Write Tests 6356130
     -   **Description:** Write tests for a `DisplayService` that takes `MetadataChange[]` and formats it into a table string or JSON string.
     -   **Validation:** Test fails.
 
