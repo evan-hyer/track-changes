@@ -10,7 +10,7 @@
     -   **Description:** Update `tsconfig.json` and `.eslintrc` (or `eslint.config.js`) to match the project's selected style guides (`conductor/code_styleguides/`).
     -   **Validation:** Run `npm run lint` and ensure no errors.
 
-- [ ] Task: Configure Testing Framework
+- [~] Task: Configure Testing Framework
     -   **Description:** Ensure Jest or Mocha is set up correctly with TypeScript support. Configure coverage reporting to enforce the 80% threshold.
     -   **Validation:** Run `npm test` and verify a sample test passes with coverage report.
 
