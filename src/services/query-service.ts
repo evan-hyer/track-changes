@@ -1,10 +1,25 @@
 export interface MetadataChange {
   componentName: string;
-  type: string;
-  modifiedBy: string;
   date: string;
+  modifiedBy: string;
+  type: string;
 }
 
-export function mapSourceMemberToChange(sourceMember: any): MetadataChange {
-  throw new Error(`Not implemented: ${sourceMember}`);
+export interface SourceMember {
+  ChangedBy: null | {
+    Name: string;
+  };
+  MemberName: string;
+  MemberType: string;
+  RevisionNum: number;
+  SystemModstamp: string;
+}
+
+export function mapSourceMemberToChange(sourceMember: SourceMember): MetadataChange {
+  return {
+    componentName: sourceMember.MemberName,
+    date: sourceMember.SystemModstamp,
+    modifiedBy: sourceMember.ChangedBy ? sourceMember.ChangedBy.Name : 'Unknown',
+    type: sourceMember.MemberType,
+  };
 }

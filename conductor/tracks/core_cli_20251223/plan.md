@@ -34,7 +34,7 @@
     -   **Description:** Define interfaces for `MetadataChange` (name, type, user, date). Write a test for a transformation function that maps raw SOQL results (mocked) to this interface.
     -   **Validation:** Test fails.
 
-- [ ] Task: Define Data Model - Implementation
+- [~] Task: Define Data Model - Implementation
     -   **Description:** Implement the interfaces and transformation logic.
     -   **Validation:** Tests pass.
 
