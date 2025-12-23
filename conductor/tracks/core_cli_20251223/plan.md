@@ -6,7 +6,7 @@
     -   **Description:** Generate a new single-command `oclif` project using `npx oclif generate`. Configure it for TypeScript.
     -   **Validation:** Run `./bin/run --version` to verify the CLI executes.
 
-- [~] Task: Configure TypeScript and Linting
+- [x] Task: Configure TypeScript and Linting 5947dde
     -   **Description:** Update `tsconfig.json` and `.eslintrc` (or `eslint.config.js`) to match the project's selected style guides (`conductor/code_styleguides/`).
     -   **Validation:** Run `npm run lint` and ensure no errors.
 
