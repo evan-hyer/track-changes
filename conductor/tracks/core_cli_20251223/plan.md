@@ -78,4 +78,4 @@
     -   **Description:** Create a dummy scratch org. Make a change (e.g., create a class). Run `bin/run` (locally) against that org and verify the change appears in the table.
     -   **Validation:** Screenshot or log output confirming functionality.
 
-- [ ] Task: Conductor - User Manual Verification 'Verification & Packaging' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Verification & Packaging' (Protocol in workflow.md)
