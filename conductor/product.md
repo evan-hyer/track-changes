@@ -25,6 +25,7 @@ The main goal of the `track-changes` CLI is to provide immediate visibility into
 
 ### Features
 -   **Change Reporting:** Displays a clear, scannable table of changed metadata components, including the component name, metadata type, the last user who modified it, and the modification timestamp.
+-   **JSON Output:** Supports machine-readable JSON output for integration with other tools and the VS Code plugin.
 -   **Distribution:** The tool will be published to the npm registry, allowing for easy, global installation via `npm install`.
 -   **Dual-Functionality:** It will be engineered to work as both a standalone, independent CLI command and as a plugin for the Salesforce CLI (`sf`).
 
