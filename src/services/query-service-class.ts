@@ -34,29 +34,25 @@ export class QueryService {
       return [];
     }
     
-    // DEBUG: Inspect raw records
-    console.log('DEBUG: First SourceMember record:', JSON.stringify(records[0], null, 2));
-
     // 3. Resolve User Names
     // Note: When selecting 'ChangedBy' directly without traversal, it returns the User ID.
     const userIds = Array.from(new Set(records.map((r) => r.ChangedBy as unknown as string).filter((id) => !!id)));
-    
-    console.log('DEBUG: Collected User IDs:', userIds);
-
     const userMap = new Map<string, string>();
 
     if (userIds.length > 0) {
       const idsString = userIds.map((id) => `'${id}'`).join(',');
       const nameQuery = `SELECT Id, Name FROM User WHERE Id IN (${idsString})`;
       const nameResult = await this.connection.tooling.query<{Id: string; Name: string}>(nameQuery);
-      nameResult.records.forEach((u) => userMap.set(u.Id, u.Name));
-      console.log('DEBUG: Resolved User Names:', nameResult.records.length);
+      
+      // Store using 15-char ID to ensure matching (SourceMember often returns 15-char, User query returns 18-char)
+      nameResult.records.forEach((u) => userMap.set(u.Id.substring(0, 15), u.Name));
     }
 
     return records.map((record) => {
       // The record.ChangedBy field holds the ID here
       const userId = record.ChangedBy as unknown as string;
-      const userName = userMap.get(userId);
+      // Normalize lookup ID to 15 chars
+      const userName = userId ? userMap.get(userId.substring(0, 15)) : undefined;
       
       // We need to construct the object expected by mapSourceMemberToChange
       // referencing the interface which expects { Name: string } or similar

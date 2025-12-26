@@ -21,6 +21,12 @@
     - Research confirms `RevisionNum` should be `RevisionCounter`.
     - `ChangedBy` returns an ID, not a relationship object.
     - Update code and interfaces to use `RevisionCounter` and handle `ChangedBy` as an ID.
+- [x] Task: Debug "Unknown" User Name issue
+    - Add debug logs to inspect `SourceMember` records.
+    - *Findings:* `ChangedBy` ID appears to be 15-char, while User query likely returns 18-char, causing Map lookup failure.
+- [x] Task: Fix User ID Mismatch (15 vs 18 char)
+    - Normalize all IDs to 15 characters before storing in and retrieving from the `userMap`.
+    - Update `src/services/query-service-class.ts`.
 - [ ] Task: Conductor - User Manual Verification 'Implementation' (Protocol in workflow.md)
 
 ## Phase 3: Verification
