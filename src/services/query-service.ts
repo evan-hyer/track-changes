@@ -6,21 +6,29 @@ export interface MetadataChange {
 }
 
 export interface SourceMember {
-  ChangedBy?: null | {
+  ChangedBy?: string | null | {
     Name: string;
   };
-  ChangedById: string;
   MemberName: string;
   MemberType: string;
-  RevisionNum: number;
+  RevisionCounter: number;
   SystemModstamp: string;
 }
 
 export function mapSourceMemberToChange(sourceMember: SourceMember): MetadataChange {
+  let modifiedBy = 'Unknown';
+  if (sourceMember.ChangedBy) {
+      if (typeof sourceMember.ChangedBy === 'string') {
+          modifiedBy = sourceMember.ChangedBy; // It's an ID if not resolved
+      } else if ('Name' in sourceMember.ChangedBy) {
+          modifiedBy = sourceMember.ChangedBy.Name;
+      }
+  }
+
   return {
     componentName: sourceMember.MemberName,
     date: sourceMember.SystemModstamp,
-    modifiedBy: sourceMember.ChangedBy ? sourceMember.ChangedBy.Name : 'Unknown',
+    modifiedBy,
     type: sourceMember.MemberType,
   };
 }

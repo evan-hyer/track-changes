@@ -19,10 +19,10 @@ export class QueryService {
     }
 
     // 2. Query SourceMember
-    let query = 'SELECT MemberName, MemberType, RevisionNum, ChangedById, SystemModstamp FROM SourceMember';
+    let query = 'SELECT MemberName, MemberType, RevisionCounter, ChangedBy, SystemModstamp FROM SourceMember';
     
     if (userIdFilter) {
-      query += ` WHERE ChangedById = '${userIdFilter}'`;
+      query += ` WHERE ChangedBy = '${userIdFilter}'`;
     }
 
     const result = await this.connection.tooling.query<SourceMember>(query);
@@ -35,7 +35,8 @@ export class QueryService {
     }
     
     // 3. Resolve User Names
-    const userIds = Array.from(new Set(records.map((r) => r.ChangedById).filter((id) => !!id)));
+    // Note: When selecting 'ChangedBy' directly without traversal, it returns the User ID.
+    const userIds = Array.from(new Set(records.map((r) => r.ChangedBy as unknown as string).filter((id) => !!id)));
     const userMap = new Map<string, string>();
 
     if (userIds.length > 0) {
@@ -46,11 +47,20 @@ export class QueryService {
     }
 
     return records.map((record) => {
-      const userName = userMap.get(record.ChangedById);
-      if (userName) {
-        record.ChangedBy = {Name: userName};
-      }
-      return mapSourceMemberToChange(record);
+      // The record.ChangedBy field holds the ID here
+      const userId = record.ChangedBy as unknown as string;
+      const userName = userMap.get(userId);
+      
+      // We need to construct the object expected by mapSourceMemberToChange
+      // referencing the interface which expects { Name: string } or similar
+      // Actually we should check the interface definition in query-service.ts
+      
+      const mappedRecord = {
+        ...record,
+        ChangedBy: userName ? { Name: userName } : null
+      };
+      
+      return mapSourceMemberToChange(mappedRecord as unknown as SourceMember);
     });
   }
 }

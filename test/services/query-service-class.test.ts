@@ -27,12 +27,11 @@ describe('QueryService Class', () => {
   it('should query SourceMembers and fetch User names (resolving IDs)', async () => {
     const mockSourceMembers: SourceMember[] = [
       {
-        ChangedById: '005xxx',
+        ChangedBy: '005xxx', // ID returned by query
         MemberName: 'MyClass',
         MemberType: 'ApexClass',
-        RevisionNum: 1,
+        RevisionCounter: 1,
         SystemModstamp: '2023-01-01T10:00:00.000+0000',
-        ChangedBy: null // Simulating what we get if we don't select it
       },
     ];
     
@@ -60,11 +59,11 @@ describe('QueryService Class', () => {
     
     // Verification
     expect(queryStub.calledTwice, 'Should call query twice (SourceMember + User)').to.be.true;
-    // The first call should be SourceMember, and it should use ChangedById
+    // The first call should be SourceMember, and it should use ChangedBy
     const firstCallArgs = queryStub.getCalls().find(call => call.args[0].includes('FROM SourceMember'))?.args[0];
     expect(firstCallArgs).to.exist;
-    expect(firstCallArgs).to.contain('ChangedById');
-    expect(firstCallArgs).to.not.contain('ChangedBy.Name');
+    expect(firstCallArgs).to.contain('ChangedBy');
+    expect(firstCallArgs).to.not.contain('ChangedById');
   });
 
    it('should filter by username by first resolving the User ID', async () => {
@@ -87,6 +86,6 @@ describe('QueryService Class', () => {
      // Find the SourceMember call
      const sourceMemberCallArgs = queryStub.getCalls().find(call => call.args[0].includes('FROM SourceMember'))?.args[0];
      
-     expect(sourceMemberCallArgs).to.contain("WHERE ChangedById = '005Target'");
+     expect(sourceMemberCallArgs).to.contain("WHERE ChangedBy = '005Target'");
    });
 });

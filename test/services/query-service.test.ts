@@ -9,10 +9,9 @@ describe('QueryService', () => {
         ChangedBy: {
           Name: 'Test User',
         },
-        ChangedById: '005xxx',
         MemberName: 'MyClass',
         MemberType: 'ApexClass',
-        RevisionNum: 1,
+        RevisionCounter: 1,
         SystemModstamp: '2023-01-01T12:00:00.000+0000',
       };
 
@@ -30,10 +29,9 @@ describe('QueryService', () => {
     it('should handle missing ChangedBy info gracefully', () => {
        const sourceMember = {
         ChangedBy: null,
-        ChangedById: '005xxx',
         MemberName: 'MyClass',
         MemberType: 'ApexClass',
-        RevisionNum: 1,
+        RevisionCounter: 1,
         SystemModstamp: '2023-01-01T12:00:00.000+0000',
       };
 

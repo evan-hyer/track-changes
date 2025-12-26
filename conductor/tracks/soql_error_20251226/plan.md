@@ -17,6 +17,10 @@
     - Modify the return type/logic to accept `ChangedById`.
     - (If the service handles data formatting) ensure the output handles the ID gracefully or fetches the name in a separate step.
     - *Decision:* For this immediate bug fix, we will prioritize stopping the crash. We will fetch `ChangedById`. If the display service expects a name, we might pass the ID for now to ensure stability.
+- [x] Task: Verify and correct SourceMember field names
+    - Research confirms `RevisionNum` should be `RevisionCounter`.
+    - `ChangedBy` returns an ID, not a relationship object.
+    - Update code and interfaces to use `RevisionCounter` and handle `ChangedBy` as an ID.
 - [ ] Task: Conductor - User Manual Verification 'Implementation' (Protocol in workflow.md)
 
 ## Phase 3: Verification
