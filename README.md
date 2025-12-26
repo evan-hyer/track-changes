@@ -29,8 +29,7 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`track-changes hello PERSON`](#track-changes-hello-person)
-* [`track-changes hello world`](#track-changes-hello-world)
+* [`track-changes`](#track-changes)
 * [`track-changes help [COMMAND]`](#track-changes-help-command)
 * [`track-changes plugins`](#track-changes-plugins)
 * [`track-changes plugins add PLUGIN`](#track-changes-plugins-add-plugin)
@@ -42,49 +41,30 @@ USAGE
 * [`track-changes plugins uninstall [PLUGIN]`](#track-changes-plugins-uninstall-plugin)
 * [`track-changes plugins unlink [PLUGIN]`](#track-changes-plugins-unlink-plugin)
 * [`track-changes plugins update`](#track-changes-plugins-update)
+* [`track-changes track`](#track-changes-track)
 * [`track-changes track changes`](#track-changes-track-changes)
 
-## `track-changes hello PERSON`
+## `track-changes`
 
-Say hello
+Track changes in a Salesforce org
 
 ```
 USAGE
-  $ track-changes hello PERSON -f <value>
-
-ARGUMENTS
-  PERSON  Person to say hello to
+  $ track-changes  [--json] [-o <value>] [-u <value>]
 
 FLAGS
-  -f, --from=<value>  (required) Who is saying hello
+  -o, --target-org=<value>  The alias or username of the org to track changes in
+  -u, --user=<value>        Filter changes by the user who made them
+      --json                Output result in JSON format
 
 DESCRIPTION
-  Say hello
+  Track changes in a Salesforce org
 
-EXAMPLES
-  $ track-changes hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
+ALIASES
+  $ track-changes 
+  $ track-changes track changes
+  $ track-changes track changes
 ```
-
-_See code: [src/commands/hello/index.ts](https://github.com/evan-hyer/track-changes/blob/v0.0.0/src/commands/hello/index.ts)_
-
-## `track-changes hello world`
-
-Say hello world
-
-```
-USAGE
-  $ track-changes hello world
-
-DESCRIPTION
-  Say hello world
-
-EXAMPLES
-  $ track-changes hello world
-  hello world! (./src/commands/hello/world.ts)
-```
-
-_See code: [src/commands/hello/world.ts](https://github.com/evan-hyer/track-changes/blob/v0.0.0/src/commands/hello/world.ts)_
 
 ## `track-changes help [COMMAND]`
 
@@ -396,6 +376,30 @@ DESCRIPTION
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.54/src/commands/plugins/update.ts)_
 
+## `track-changes track`
+
+Track changes in a Salesforce org
+
+```
+USAGE
+  $ track-changes track [--json] [-o <value>] [-u <value>]
+
+FLAGS
+  -o, --target-org=<value>  The alias or username of the org to track changes in
+  -u, --user=<value>        Filter changes by the user who made them
+      --json                Output result in JSON format
+
+DESCRIPTION
+  Track changes in a Salesforce org
+
+ALIASES
+  $ track-changes 
+  $ track-changes track changes
+  $ track-changes track changes
+```
+
+_See code: [src/commands/track.ts](https://github.com/evan-hyer/track-changes/blob/v0.0.0/src/commands/track.ts)_
+
 ## `track-changes track changes`
 
 Track changes in a Salesforce org
@@ -411,7 +415,10 @@ FLAGS
 
 DESCRIPTION
   Track changes in a Salesforce org
-```
 
-_See code: [src/commands/track/changes.ts](https://github.com/evan-hyer/track-changes/blob/v0.0.0/src/commands/track/changes.ts)_
+ALIASES
+  $ track-changes 
+  $ track-changes track changes
+  $ track-changes track changes
+```
 <!-- commandsstop -->

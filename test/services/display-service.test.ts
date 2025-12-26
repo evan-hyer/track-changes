@@ -30,4 +30,12 @@ describe('DisplayService', () => {
     const result = displayService.formatTableData(mockChanges);
     expect(result).to.deep.equal(mockChanges);
   });
+
+  it('should format changes as HTML string', () => {
+    const result = displayService.formatHtml(mockChanges);
+    expect(result).to.contain('<!DOCTYPE html>');
+    expect(result).to.contain('MyClass');
+    expect(result).to.contain('John Doe');
+    expect(result).to.contain('<table>');
+  });
 });
