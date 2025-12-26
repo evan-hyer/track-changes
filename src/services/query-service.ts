@@ -6,9 +6,10 @@ export interface MetadataChange {
 }
 
 export interface SourceMember {
-  ChangedBy: null | {
+  ChangedBy?: null | {
     Name: string;
   };
+  ChangedById: string;
   MemberName: string;
   MemberType: string;
   RevisionNum: number;
