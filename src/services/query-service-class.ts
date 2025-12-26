@@ -34,9 +34,15 @@ export class QueryService {
       return [];
     }
     
+    // DEBUG: Inspect raw records
+    console.log('DEBUG: First SourceMember record:', JSON.stringify(records[0], null, 2));
+
     // 3. Resolve User Names
     // Note: When selecting 'ChangedBy' directly without traversal, it returns the User ID.
     const userIds = Array.from(new Set(records.map((r) => r.ChangedBy as unknown as string).filter((id) => !!id)));
+    
+    console.log('DEBUG: Collected User IDs:', userIds);
+
     const userMap = new Map<string, string>();
 
     if (userIds.length > 0) {
@@ -44,6 +50,7 @@ export class QueryService {
       const nameQuery = `SELECT Id, Name FROM User WHERE Id IN (${idsString})`;
       const nameResult = await this.connection.tooling.query<{Id: string; Name: string}>(nameQuery);
       nameResult.records.forEach((u) => userMap.set(u.Id, u.Name));
+      console.log('DEBUG: Resolved User Names:', nameResult.records.length);
     }
 
     return records.map((record) => {
