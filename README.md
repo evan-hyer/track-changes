@@ -42,7 +42,6 @@ USAGE
 * [`track-changes plugins unlink [PLUGIN]`](#track-changes-plugins-unlink-plugin)
 * [`track-changes plugins update`](#track-changes-plugins-update)
 * [`track-changes track`](#track-changes-track)
-* [`track-changes track changes`](#track-changes-track-changes)
 
 ## `track-changes`
 
@@ -50,20 +49,19 @@ Track changes in a Salesforce org
 
 ```
 USAGE
-  $ track-changes  [--json] [-o <value>] [-u <value>]
+  $ track-changes  [-o table|json|html] [-t <value>] [-u <value>]
 
 FLAGS
-  -o, --target-org=<value>  The alias or username of the org to track changes in
+  -o, --output=<option>     [default: table] Output format
+                            <options: table|json|html>
+  -t, --target-org=<value>  The alias or username of the org to track changes in
   -u, --user=<value>        Filter changes by the user who made them
-      --json                Output result in JSON format
 
 DESCRIPTION
   Track changes in a Salesforce org
 
 ALIASES
-  $ track-changes 
-  $ track-changes track changes
-  $ track-changes track changes
+  $ track-changes
 ```
 
 ## `track-changes help [COMMAND]`
@@ -382,43 +380,20 @@ Track changes in a Salesforce org
 
 ```
 USAGE
-  $ track-changes track [--json] [-o <value>] [-u <value>]
+  $ track-changes track [-o table|json|html] [-t <value>] [-u <value>]
 
 FLAGS
-  -o, --target-org=<value>  The alias or username of the org to track changes in
+  -o, --output=<option>     [default: table] Output format
+                            <options: table|json|html>
+  -t, --target-org=<value>  The alias or username of the org to track changes in
   -u, --user=<value>        Filter changes by the user who made them
-      --json                Output result in JSON format
 
 DESCRIPTION
   Track changes in a Salesforce org
 
 ALIASES
-  $ track-changes 
-  $ track-changes track changes
-  $ track-changes track changes
+  $ track-changes
 ```
 
 _See code: [src/commands/track.ts](https://github.com/evan-hyer/track-changes/blob/v0.0.0/src/commands/track.ts)_
-
-## `track-changes track changes`
-
-Track changes in a Salesforce org
-
-```
-USAGE
-  $ track-changes track changes [--json] [-o <value>] [-u <value>]
-
-FLAGS
-  -o, --target-org=<value>  The alias or username of the org to track changes in
-  -u, --user=<value>        Filter changes by the user who made them
-      --json                Output result in JSON format
-
-DESCRIPTION
-  Track changes in a Salesforce org
-
-ALIASES
-  $ track-changes 
-  $ track-changes track changes
-  $ track-changes track changes
-```
 <!-- commandsstop -->

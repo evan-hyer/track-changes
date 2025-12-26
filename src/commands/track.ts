@@ -7,8 +7,7 @@ import {OrgService} from '../services/org-service.js';
 import {QueryService} from '../services/query-service-class.js';
 
 export default class TrackChanges extends Command {
-  static aliases = ['', 'track:changes', 'track changes'];
-
+  static aliases = ['']
   static description = 'Track changes in a Salesforce org';
 
   static flags = {
