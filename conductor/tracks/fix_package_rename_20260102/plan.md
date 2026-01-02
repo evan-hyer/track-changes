@@ -9,7 +9,7 @@ Update the core identity of the package in `package.json`.
   - Change `"name": "track-changes"` to `"name": "@evan-hyer/track-changes"`.
   - Add `"publishConfig": { "access": "public" }`.
   - Ensure the `"bin"` mapping for `track-changes` remains unchanged.
-- [ ] **Task: Update installation instructions in `README.md`**
+- [x] **Task: Update installation instructions in `README.md`** 04cbd3e
   - Search for `npm install -g track-changes` and update it to `npm install -g @evan-hyer/track-changes`.
 - [ ] **Task: Conductor - User Manual Verification 'Phase 1: Package Configuration' (Protocol in workflow.md)**
 
