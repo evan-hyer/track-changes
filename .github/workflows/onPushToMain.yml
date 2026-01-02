@@ -34,6 +34,12 @@ jobs:
           fi
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Validate README
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
+        run: |
+          npm install
+          npm run build
+          npm run check:readme
       - name: Create Github Release
         uses: ncipollo/release-action@2c591bcc8ecdcd2db72b97d6147f871fcd833ba5
         if: ${{ steps.version-check.outputs.skipped == 'false' }}
