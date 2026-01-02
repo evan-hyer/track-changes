@@ -65,7 +65,6 @@
   "repository": "evan-hyer/track-changes",
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
-    "check:readme": "npx oclif readme && git diff --exit-code README.md",
     "lint": "eslint",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "npm run lint",
