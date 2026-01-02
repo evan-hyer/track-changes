@@ -17,13 +17,9 @@ Implement the check that fails the build if the README is out of sync with the c
 - [x] **Task: Integrate README validation into `onPushToMain.yml`** eb12538
 - [x] **Task: Conductor - User Manual Verification 'Phase 2: Documentation Enforcement' (Protocol in workflow.md)** 642d97c
 
-## Phase 3: Final Verification & Cleanup
+## Phase 3: Final Verification & Cleanup [checkpoint: 4dfcc92]
 Ensure the entire flow works without write access.
 
 - [x] **Task: Verify "Stale README" failure** c999653
-  - Intentionally modify a command's help text locally without running `oclif readme`.
-  - Push to a feature branch and verify that the `tests` workflow fails.
 - [x] **Task: Verify "Up-to-date README" success** b6bf191
-  - Run `npm run prepack` (or the new validation script) locally, commit, and push.
-  - Verify that the CI passes.
-- [ ] **Task: Conductor - User Manual Verification 'Phase 3: Final Verification & Cleanup' (Protocol in workflow.md)**
+- [x] **Task: Conductor - User Manual Verification 'Phase 3: Final Verification & Cleanup' (Protocol in workflow.md)** 4dfcc92
