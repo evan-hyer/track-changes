@@ -4,6 +4,10 @@ on:
   release:
     types: [released]
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -15,7 +19,4 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: npm run prepack
-      - uses: JS-DevTools/npm-publish@19c28f1ef146469e409470805ea4279d47c3d35c
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-      - run: npm run postpack
+      - run: npm publish --provenance --access public
