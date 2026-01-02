@@ -20,7 +20,7 @@ Implement the check that fails the build if the README is out of sync with the c
 ## Phase 3: Final Verification & Cleanup
 Ensure the entire flow works without write access.
 
-- [ ] **Task: Verify "Stale README" failure**
+- [x] **Task: Verify "Stale README" failure** c999653
   - Intentionally modify a command's help text locally without running `oclif readme`.
   - Push to a feature branch and verify that the `tests` workflow fails.
 - [ ] **Task: Verify "Up-to-date README" success**
