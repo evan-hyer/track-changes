@@ -5,8 +5,8 @@ Salesforce CLI plugin to track metadata changes.
 
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/track-changes.svg)](https://npmjs.org/package/track-changes)
-[![Downloads/week](https://img.shields.io/npm/dw/track-changes.svg)](https://npmjs.org/package/track-changes)
+[![Version](https://img.shields.io/npm/v/@evan-hyer/track-changes.svg)](https://npmjs.org/package/@evan-hyer/track-changes)
+[![Downloads/week](https://img.shields.io/npm/dw/@evan-hyer/track-changes.svg)](https://npmjs.org/package/@evan-hyer/track-changes)
 
 
 <!-- toc -->
@@ -22,7 +22,7 @@ Salesforce CLI plugin to track metadata changes.
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g track-changes
+$ npm install -g @evan-hyer/track-changes
 $ track-changes COMMAND
 running command...
 $ track-changes (--version)
@@ -34,7 +34,7 @@ USAGE
 ```
 <!-- usagestop -->
 ```sh-session
-$ npm install -g track-changes
+$ npm install -g @evan-hyer/track-changes
 $ track-changes COMMAND
 running command...
 $ track-changes (--version)
@@ -46,7 +46,7 @@ USAGE
 ```
 <!-- usagestop -->
 ```sh-session
-$ npm install -g track-changes
+$ npm install -g @evan-hyer/track-changes
 $ track-changes COMMAND
 running command...
 $ track-changes (--version)
