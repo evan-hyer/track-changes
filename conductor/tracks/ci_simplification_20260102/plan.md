@@ -12,7 +12,7 @@ Focus on removing the automated commit/push logic and tightening security.
 ## Phase 2: Documentation Enforcement
 Implement the check that fails the build if the README is out of sync with the code.
 
-- [ ] **Task: Create a README validation script**
+- [x] **Task: Create a README validation script** fed0e5e
   - Add a script (e.g., in `package.json` or a small shell script) that runs `oclif readme` and exits with a non-zero code if `git status --porcelain` shows changes to `README.md`.
 - [ ] **Task: Integrate README validation into `test.yml`**
   - Add a step to the `unit-tests` job in `.github/workflows/test.yml` to run the README validation.
