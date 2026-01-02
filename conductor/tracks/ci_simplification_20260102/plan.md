@@ -16,7 +16,7 @@ Implement the check that fails the build if the README is out of sync with the c
   - Add a script (e.g., in `package.json` or a small shell script) that runs `oclif readme` and exits with a non-zero code if `git status --porcelain` shows changes to `README.md`.
 - [x] **Task: Integrate README validation into `test.yml`** ba76680
   - Add a step to the `unit-tests` job in `.github/workflows/test.yml` to run the README validation.
-- [ ] **Task: Integrate README validation into `onPushToMain.yml`**
+- [x] **Task: Integrate README validation into `onPushToMain.yml`** eb12538
   - Add a step to `.github/workflows/onPushToMain.yml` to ensure the version being released has a valid README.
 - [ ] **Task: Conductor - User Manual Verification 'Phase 2: Documentation Enforcement' (Protocol in workflow.md)**
 
