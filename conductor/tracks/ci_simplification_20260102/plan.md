@@ -8,7 +8,7 @@ Focus on removing the automated commit/push logic and tightening security.
 - [x] **Task: Remove commit-back logic from `onPushToMain.yml`** 297a5c1
   - Remove the `Setup git` and `Generate oclif README` steps from `.github/workflows/onPushToMain.yml`.
   - Ensure the `Create Github Release` step remains functional.
-- [ ] **Task: Configure strict Read-Only permissions**
+- [x] **Task: Configure strict Read-Only permissions** 9e8e6d3
   - Update `.github/workflows/onPushToMain.yml` and `.github/workflows/test.yml` to use explicit `permissions: read-all` or equivalent, granting `contents: write` only to the specific release job if necessary.
 - [ ] **Task: Conductor - User Manual Verification 'Phase 1: CI Pipeline Refactoring' (Protocol in workflow.md)**
 
