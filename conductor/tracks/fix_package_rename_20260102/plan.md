@@ -12,7 +12,7 @@ Update the core identity of the package in `package.json`.
 ## Phase 2: Verification
 Ensure the tool still functions correctly under the new name.
 
-- [ ] **Task: Verify CLI command execution**
+- [~] **Task: Verify CLI command execution**
   - Run the CLI locally using `bin/run.js` or `npm link`.
   - Confirm the command `track-changes` is still recognized and functional.
 - [ ] **Task: Conductor - User Manual Verification 'Phase 2: Verification' (Protocol in workflow.md)**
