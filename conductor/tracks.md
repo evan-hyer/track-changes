@@ -16,5 +16,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [~] Track: Rename .github/workflows/onRelease.yml to .github/workflows/publish.yml
+## [x] Track: Rename .github/workflows/onRelease.yml to .github/workflows/publish.yml
 *Link: [./conductor/tracks/rename_release_workflow_20260102/](./conductor/tracks/rename_release_workflow_20260102/)*
