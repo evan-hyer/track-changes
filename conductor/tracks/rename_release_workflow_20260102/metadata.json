@@ -1,8 +1,0 @@
-{
-  "track_id": "rename_release_workflow_20260102",
-  "type": "chore",
-  "status": "completed",
-  "created_at": "2026-01-02T14:37:00Z",
-  "updated_at": "2026-01-02T15:00:00Z",
-  "description": "Rename .github/workflows/onRelease.yml to .github/workflows/publish.yml"
-}
