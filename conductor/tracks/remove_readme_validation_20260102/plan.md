@@ -2,6 +2,6 @@
 
 ## Phase 1: Workflow Updates
 - [x] Task: Remove "Validate README" step from `.github/workflows/onPushToMain.yml`. [783c105]
-- [ ] Task: Remove `npm run check:readme` from `.github/workflows/test.yml`.
+- [x] Task: Remove `npm run check:readme` from `.github/workflows/test.yml`. [b0ab307]
 - [ ] Task: Remove `"check:readme"` script from `package.json`.
 - [ ] Task: Conductor - User Manual Verification 'Workflow Updates' (Protocol in workflow.md)
