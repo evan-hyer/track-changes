@@ -2,16 +2,12 @@
 
 Rename the package to `@evan-hyer/track-changes` and configure public scoped publishing.
 
-## Phase 1: Package Configuration
+## Phase 1: Package Configuration [checkpoint: 1d7d528]
 Update the core identity of the package in `package.json`.
 
 - [x] **Task: Update name and publishConfig in `package.json`** d28d548
-  - Change `"name": "track-changes"` to `"name": "@evan-hyer/track-changes"`.
-  - Add `"publishConfig": { "access": "public" }`.
-  - Ensure the `"bin"` mapping for `track-changes` remains unchanged.
 - [x] **Task: Update installation instructions in `README.md`** 04cbd3e
-  - Search for `npm install -g track-changes` and update it to `npm install -g @evan-hyer/track-changes`.
-- [ ] **Task: Conductor - User Manual Verification 'Phase 1: Package Configuration' (Protocol in workflow.md)**
+- [x] **Task: Conductor - User Manual Verification 'Phase 1: Package Configuration' (Protocol in workflow.md)** 1d7d528
 
 ## Phase 2: Verification
 Ensure the tool still functions correctly under the new name.
