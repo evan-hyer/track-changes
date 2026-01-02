@@ -1,0 +1,35 @@
+# Implementation Plan - CI/CD Simplification & README Enforcement
+
+This plan outlines the steps to remove "commit-back" logic from the CI/CD pipeline and enforce documentation consistency through read-only verification.
+
+## Phase 1: CI Pipeline Refactoring
+Focus on removing the automated commit/push logic and tightening security.
+
+- [x] **Task: Remove commit-back logic from `onPushToMain.yml`** 297a5c1
+  - Remove the `Setup git` and `Generate oclif README` steps from `.github/workflows/onPushToMain.yml`.
+  - Ensure the `Create Github Release` step remains functional.
+- [ ] **Task: Configure strict Read-Only permissions**
+  - Update `.github/workflows/onPushToMain.yml` and `.github/workflows/test.yml` to use explicit `permissions: read-all` or equivalent, granting `contents: write` only to the specific release job if necessary.
+- [ ] **Task: Conductor - User Manual Verification 'Phase 1: CI Pipeline Refactoring' (Protocol in workflow.md)**
+
+## Phase 2: Documentation Enforcement
+Implement the check that fails the build if the README is out of sync with the code.
+
+- [ ] **Task: Create a README validation script**
+  - Add a script (e.g., in `package.json` or a small shell script) that runs `oclif readme` and exits with a non-zero code if `git status --porcelain` shows changes to `README.md`.
+- [ ] **Task: Integrate README validation into `test.yml`**
+  - Add a step to the `unit-tests` job in `.github/workflows/test.yml` to run the README validation.
+- [ ] **Task: Integrate README validation into `onPushToMain.yml`**
+  - Add a step to `.github/workflows/onPushToMain.yml` to ensure the version being released has a valid README.
+- [ ] **Task: Conductor - User Manual Verification 'Phase 2: Documentation Enforcement' (Protocol in workflow.md)**
+
+## Phase 3: Final Verification & Cleanup
+Ensure the entire flow works without write access.
+
+- [ ] **Task: Verify "Stale README" failure**
+  - Intentionally modify a command's help text locally without running `oclif readme`.
+  - Push to a feature branch and verify that the `tests` workflow fails.
+- [ ] **Task: Verify "Up-to-date README" success**
+  - Run `npm run prepack` (or the new validation script) locally, commit, and push.
+  - Verify that the CI passes.
+- [ ] **Task: Conductor - User Manual Verification 'Phase 3: Final Verification & Cleanup' (Protocol in workflow.md)**
