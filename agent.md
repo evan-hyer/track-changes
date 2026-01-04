@@ -136,6 +136,121 @@ describe('ServiceName', () => {
 3. **Build check**: `npm run build` to verify TypeScript compiles
 4. **No side effects**: Tests should not create files or make network calls
 
+---
+
+## TDD Workflow (Required for This Project)
+
+All changes to query logic, sanitization, or output formatting **MUST** follow strict TDD:
+
+### Red-Green-Refactor Cycle
+
+```
+1. RED    → Write a failing test that defines expected behavior
+2. GREEN  → Write minimal code to make the test pass
+3. REFACTOR → Clean up while keeping tests green
+```
+
+### TDD Example: Adding SOQL Sanitization
+
+```typescript
+// STEP 1: Write failing test FIRST
+describe('sanitizeSoqlString', () => {
+  it('should escape single quotes', () => {
+    expect(sanitizeSoqlString("O'Brien")).to.equal("O\\'Brien");
+  });
+  
+  it('should handle injection attempts', () => {
+    const malicious = "'; DELETE FROM Account; --";
+    expect(sanitizeSoqlString(malicious)).to.contain("\\'");
+  });
+});
+
+// STEP 2: Run test → FAILS (function doesn't exist)
+// STEP 3: Implement sanitizeSoqlString()
+// STEP 4: Run test → PASSES
+// STEP 5: Refactor if needed
+```
+
+### Security-Critical Changes Require:
+- [ ] Unit tests for happy path
+- [ ] Unit tests for malicious/edge case inputs
+- [ ] Integration test verifying sanitized output reaches query
+
+---
+
+## Query Builder Pattern (Recommended)
+
+For composing SOQL queries with multiple filters, use the **Builder pattern** instead of string concatenation:
+
+### Why Builder Pattern?
+- Centralizes sanitization in one place
+- Type-safe filter composition
+- Easy to add new filter types
+- Testable output
+
+### Pattern Template
+
+```typescript
+class SoqlQueryBuilder {
+  private filters: QueryFilter[] = [];
+  
+  filterByUser(userId: string): this {
+    this.filters.push({ field: 'ChangedBy', operator: 'eq', value: userId });
+    return this;
+  }
+  
+  filterByTypes(types: string[]): this {
+    this.filters.push({ field: 'MemberType', operator: 'in', value: types });
+    return this;
+  }
+  
+  filterByDateRange(start: Date, end?: Date): this {
+    this.filters.push({ field: 'SystemModstamp', operator: 'gte', value: start });
+    if (end) this.filters.push({ field: 'SystemModstamp', operator: 'lte', value: end });
+    return this;
+  }
+  
+  build(): string {
+    // All sanitization happens here
+    const whereClause = this.filters.map(f => this.toCondition(f)).join(' AND ');
+    return `SELECT ... FROM SourceMember${whereClause ? ' WHERE ' + whereClause : ''}`;
+  }
+}
+
+// Usage
+const query = new SoqlQueryBuilder()
+  .filterByUser(userId)
+  .filterByTypes(['ApexClass', 'LightningComponentBundle'])
+  .filterByDateRange(startDate)
+  .build();
+```
+
+---
+
+## Planned Filter Enhancements
+
+These filters are planned for future implementation:
+
+| Flag | SOQL Field | Operator | Example |
+|------|------------|----------|---------|
+| `--user, -u` | ChangedBy | = | `--user "John Doe"` |
+| `--type, -t` | MemberType | IN | `--type ApexClass,LWC` |
+| `--since` | SystemModstamp | >= | `--since 2024-01-01` |
+| `--until` | SystemModstamp | <= | `--until 2024-12-31` |
+| `--name` | MemberName | LIKE | `--name "Controller%"` |
+
+### SourceMember Filterable Fields
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `MemberType` | string | ApexClass, LightningComponentBundle, CustomObject, etc. |
+| `MemberName` | string | Component API name |
+| `ChangedBy` | ID | User ID (requires lookup for display name) |
+| `SystemModstamp` | datetime | Last modification timestamp |
+| `RevisionCounter` | int | Revision number |
+
+---
+
 ## Useful References
 
 - [oclif Documentation](https://oclif.io/docs/introduction)

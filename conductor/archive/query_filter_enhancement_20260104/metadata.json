@@ -1,0 +1,8 @@
+{
+    "track_id": "query_filter_enhancement_20260104",
+    "type": "feature",
+    "status": "planned",
+    "created_at": "2026-01-04T16:45:00Z",
+    "updated_at": "2026-01-04T16:45:00Z",
+    "description": "Add dynamic query filtering with Builder pattern - date range, metadata type, component name filters with TDD approach."
+}

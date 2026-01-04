@@ -16,6 +16,12 @@ The primary programming language for both the `track-changes` CLI and the Visual
 The `track-changes` CLI will be built using **oclif**.
 -   **oclif:** A powerful, open-source framework for building command-line interfaces. It is particularly well-suited for this project due to its robust features for argument parsing, command structuring, and plugin architecture, aligning perfectly with the requirement for a Salesforce CLI plugin. Leveraging oclif, which is the foundation of the Salesforce CLI itself, will ensure tight integration and a familiar development experience for Salesforce professionals.
 
+### Testing Stack
+-   **Mocha:** Test framework for running unit and integration tests.
+-   **Chai:** Assertion library for expressive test expectations.
+-   **Sinon:** Mocking/stubbing library for isolating units under test.
+-   **c8:** Code coverage tool built on Node.js native V8 coverage.
+
 ## Visual Studio Code Plugin
 
 ### Core Technologies

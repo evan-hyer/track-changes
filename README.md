@@ -8,6 +8,33 @@ Salesforce CLI plugin to track metadata changes.
 [![Version](https://img.shields.io/npm/v/@evan-hyer/track-changes.svg)](https://npmjs.org/package/@evan-hyer/track-changes)
 [![Downloads/week](https://img.shields.io/npm/dw/@evan-hyer/track-changes.svg)](https://npmjs.org/package/@evan-hyer/track-changes)
 
+## Quick Start
+
+```bash
+# Install globally
+npm install -g @evan-hyer/track-changes
+
+# See all metadata changes in your default org
+track-changes
+
+# Filter by user
+track-changes --user "John Doe"
+
+# Export to JSON (pipe to jq, scripts, etc.)
+track-changes --output json
+
+# Generate HTML report
+track-changes --output html --out-file changes.html
+```
+
+**Output formats:**
+| Format | Flag | Use Case |
+|--------|------|----------|
+| Table | `--output table` (default) | Quick terminal scan |
+| JSON | `--output json` | Scripting, CI/CD |
+| HTML | `--output html` | Sharing, documentation |
+
+---
 
 <!-- toc -->
 * [Usage](#usage)
@@ -20,7 +47,7 @@ $ npm install -g @evan-hyer/track-changes
 $ track-changes COMMAND
 running command...
 $ track-changes (--version)
-@evan-hyer/track-changes/0.1.0 win32-x64 node-v18.15.0
+@evan-hyer/track-changes/0.1.0 win32-x64 node-v24.12.0
 $ track-changes --help [COMMAND]
 USAGE
   $ track-changes COMMAND
@@ -45,7 +72,7 @@ USAGE
 
 ## `track-changes`
 
-Track changes in a Salesforce org
+Track metadata changes in a Salesforce org. Shows component name, type, who modified it, and when.
 
 ```
 USAGE
@@ -59,10 +86,21 @@ FLAGS
   -u, --user=<value>        Filter changes by the user who made them
 
 DESCRIPTION
-  Track changes in a Salesforce org
+  Track metadata changes in a Salesforce org. Shows component name, type, who modified it, and when.
 
 ALIASES
-  $ track-changes
+  $ track-changes 
+
+EXAMPLES
+  $ track-changes 
+
+  $ track-changes  --user "John Doe"
+
+  $ track-changes  --output json
+
+  $ track-changes  --output html --out-file report.html
+
+  $ track-changes  -t myOrg -u "Admin User" -o json
 ```
 
 ## `track-changes help [COMMAND]`
@@ -377,7 +415,7 @@ _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/
 
 ## `track-changes track`
 
-Track changes in a Salesforce org
+Track metadata changes in a Salesforce org. Shows component name, type, who modified it, and when.
 
 ```
 USAGE
@@ -391,10 +429,21 @@ FLAGS
   -u, --user=<value>        Filter changes by the user who made them
 
 DESCRIPTION
-  Track changes in a Salesforce org
+  Track metadata changes in a Salesforce org. Shows component name, type, who modified it, and when.
 
 ALIASES
-  $ track-changes
+  $ track-changes 
+
+EXAMPLES
+  $ track-changes track
+
+  $ track-changes track --user "John Doe"
+
+  $ track-changes track --output json
+
+  $ track-changes track --output html --out-file report.html
+
+  $ track-changes track -t myOrg -u "Admin User" -o json
 ```
 
 _See code: [src/commands/track.ts](https://github.com/evan-hyer/track-changes/blob/v0.1.0/src/commands/track.ts)_
