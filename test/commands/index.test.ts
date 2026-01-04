@@ -1,7 +1,7 @@
 import {Command} from '@oclif/core';
 import {Org} from '@salesforce/core';
 import {expect} from 'chai';
-import {createSandbox, SinonSandbox, SinonSpyCall, SinonStub} from 'sinon';
+import {createSandbox, match, SinonSandbox, SinonSpyCall, SinonStub} from 'sinon';
 
 import TrackChanges from '../../src/commands/track.js';
 import {OrgService} from '../../src/services/org-service.js';
@@ -99,7 +99,7 @@ describe('root command', () => {
 
     await TrackChanges.run(['--user', 'Target User']);
 
-    expect(queryStub.calledWith('Target User')).to.be.true;
+    expect(queryStub.calledWith(match({username: 'Target User'}))).to.be.true;
   });
 
   it('should generate HTML report', async () => {

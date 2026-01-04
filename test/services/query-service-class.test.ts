@@ -79,22 +79,27 @@ describe('QueryService Class', () => {
         done: true, records: [], totalSize: 0,
      });
 
-    await queryService.queryChanges('TargetUser');
+    await queryService.queryChanges({username: 'TargetUser'});
 
      expect(queryStub.calledTwice, 'Should query User then SourceMember').to.be.true;
      
      // Find the SourceMember call
      const sourceMemberCallArgs = queryStub.getCalls().find(call => call.args[0].includes('FROM SourceMember'))?.args[0];
      
-          
-     
-          expect(sourceMemberCallArgs).to.contain("WHERE ChangedBy = '005Target'");
-     
-        });
-     
-     
-     
-        it('should handle missing ChangedBy info gracefully', async () => {
+     expect(sourceMemberCallArgs).to.contain("WHERE ChangedBy = '005Target'");
+   });
+
+   it('should filter by member types', async () => {
+    const queryStub = mockConnection.tooling.query as SinonStub;
+    queryStub.resolves({ done: true, records: [], totalSize: 0 });
+
+    await queryService.queryChanges({ types: ['ApexClass', 'CustomObject'] });
+
+    const sourceMemberCallArgs = queryStub.getCalls().find(call => call.args[0].includes('FROM SourceMember'))?.args[0];
+    expect(sourceMemberCallArgs).to.contain("MemberType IN ('ApexClass','CustomObject')");
+   });
+
+   it('should handle missing ChangedBy info gracefully', async () => {
      
          const mockSourceMembers: SourceMember[] = [
      

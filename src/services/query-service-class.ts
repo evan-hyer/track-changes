@@ -1,16 +1,25 @@
 import {Connection} from '@salesforce/core';
 
+import {SoqlQueryBuilder} from './soql-query-builder.js';
 import {MetadataChange, SourceMember} from './types.js';
+
+export interface QueryOptions {
+  name?: string;
+  since?: string;
+  types?: string[];
+  until?: string;
+  username?: string;
+}
 
 export class QueryService {
   constructor(private connection: Connection) {}
 
-  public async queryChanges(username?: string): Promise<MetadataChange[]> {
+  public async queryChanges(options: QueryOptions = {}): Promise<MetadataChange[]> {
     let userIdFilter: string | undefined;
 
     // 1. Resolve Username to ID if provided
-    if (username) {
-      const sanitizedUsername = this.sanitizeSoqlString(username);
+    if (options.username) {
+      const sanitizedUsername = this.sanitizeSoqlString(options.username);
       const userQuery = `SELECT Id FROM User WHERE Name = '${sanitizedUsername}'`;
       const userResult = await this.connection.tooling.query<{Id: string}>(userQuery);
       if (userResult.totalSize === 0) {
@@ -20,14 +29,26 @@ export class QueryService {
       userIdFilter = userResult.records[0].Id;
     }
 
-    // 2. Query SourceMember
-    let query = 'SELECT MemberName, MemberType, RevisionCounter, ChangedBy, SystemModstamp FROM SourceMember';
+    // 2. Build SourceMember Query
+    const builder = new SoqlQueryBuilder();
 
     if (userIdFilter) {
-      // userIdFilter is from internal query result, safe to use directly or sanitized
-      query += ` WHERE ChangedBy = '${this.sanitizeSoqlString(userIdFilter)}'`;
+      builder.filterByUser(userIdFilter);
     }
 
+    if (options.types && options.types.length > 0) {
+      builder.filterByTypes(options.types);
+    }
+
+    if (options.name) {
+      builder.filterByName(options.name);
+    }
+
+    if (options.since || options.until) {
+      builder.filterByDateRange(options.since || '1970-01-01T00:00:00Z', options.until);
+    }
+
+    const query = builder.build();
     const result = await this.connection.tooling.query<SourceMember>(query);
 
     // Check if records is undefined or null, and default to empty array if so.
@@ -46,7 +67,7 @@ export class QueryService {
           .filter(Boolean),
       ),
     ] as string[];
-    
+
     const userMap = new Map<string, string>();
 
     if (userIds.length > 0) {

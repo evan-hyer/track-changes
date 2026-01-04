@@ -10,6 +10,10 @@ export default class TrackChanges extends Command {
   static aliases = [''];
   static description = 'Track changes in a Salesforce org';
   static flags = {
+    name: Flags.string({
+      char: 'n',
+      description: 'Filter by component name (allows % wildcard)',
+    }),
     'out-file': Flags.string({
       char: 'f',
       description: 'Output filename for HTML report',
@@ -20,9 +24,21 @@ export default class TrackChanges extends Command {
       description: 'Output format',
       options: ['table', 'json', 'html'],
     }),
+    since: Flags.string({
+      char: 's',
+      description: 'Filter changes since this date (YYYY-MM-DD)',
+    }),
     'target-org': Flags.string({
       char: 't',
       description: 'The alias or username of the org to track changes in',
+    }),
+    type: Flags.string({
+      char: 'm',
+      description: 'Filter by member type (comma-separated)',
+    }),
+    until: Flags.string({
+      char: 'e',
+      description: 'Filter changes until this date (YYYY-MM-DD)',
     }),
     user: Flags.string({
       char: 'u',
@@ -44,7 +60,13 @@ export default class TrackChanges extends Command {
       const connection = org.getConnection();
       const queryService = new QueryService(connection);
 
-      const changes = await queryService.queryChanges(flags.user);
+      const changes = await queryService.queryChanges({
+        name: flags.name,
+        since: flags.since,
+        types: flags.type?.split(','),
+        until: flags.until,
+        username: flags.user,
+      });
 
       if (flags.output === 'json') {
         this.log(this.displayService.formatJson(changes));
