@@ -1,30 +1,9 @@
-import {MetadataChange} from './query-service.js';
+import {MetadataChange} from './types.js';
 
 /**
  * Service to handle CLI output display formatting.
  */
 export class DisplayService {
-  /**
-   * Formats the changes as a JSON string.
-   *
-   * @param changes - The list of metadata changes.
-   * @returns A JSON string representation of the changes.
-   */
-  public formatJson(changes: MetadataChange[]): string {
-    return JSON.stringify(changes, null, 2);
-  }
-
-  /**
-   * Returns the changes formatted for table display.
-   * For MVP, this just returns the original array.
-   *
-   * @param changes - The list of metadata changes.
-   * @returns The list of metadata changes.
-   */
-  public formatTableData(changes: MetadataChange[]): MetadataChange[] {
-    return changes;
-  }
-
   /**
    * Formats the changes as a basic HTML table.
    *
@@ -36,10 +15,10 @@ export class DisplayService {
       .map(
         (change) => `
         <tr>
-          <td>${change.componentName}</td>
-          <td>${change.type}</td>
-          <td>${change.modifiedBy}</td>
-          <td>${change.date}</td>
+          <td>${this.escapeHtml(change.componentName)}</td>
+          <td>${this.escapeHtml(change.type)}</td>
+          <td>${this.escapeHtml(change.modifiedBy)}</td>
+          <td>${this.escapeHtml(change.date)}</td>
         </tr>`,
       )
       .join('');
@@ -79,5 +58,28 @@ export class DisplayService {
       </body>
       </html>
     `;
+  }
+
+  /**
+   * Formats the changes as a JSON string.
+   *
+   * @param changes - The list of metadata changes.
+   * @returns A JSON string representation of the changes.
+   */
+  public formatJson(changes: MetadataChange[]): string {
+    return JSON.stringify(changes, null, 2);
+  }
+
+  private escapeHtml(unsafe: null | string | undefined): string {
+    if (!unsafe) {
+      return '';
+    }
+
+    return String(unsafe)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
   }
 }

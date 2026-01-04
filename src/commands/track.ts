@@ -1,16 +1,19 @@
+import {Command, Flags} from '@oclif/core';
 import {exec} from 'node:child_process';
 import * as fs from 'node:fs/promises';
-import {Command, Flags} from '@oclif/core';
 
 import {DisplayService} from '../services/display-service.js';
 import {OrgService} from '../services/org-service.js';
 import {QueryService} from '../services/query-service-class.js';
 
 export default class TrackChanges extends Command {
-  static aliases = ['']
+  static aliases = [''];
   static description = 'Track changes in a Salesforce org';
-
   static flags = {
+    'out-file': Flags.string({
+      char: 'f',
+      description: 'Output filename for HTML report',
+    }),
     output: Flags.string({
       char: 'o',
       default: 'table',
@@ -26,12 +29,15 @@ export default class TrackChanges extends Command {
       description: 'Filter changes by the user who made them',
     }),
   };
-
   private displayService = new DisplayService();
   private orgService = new OrgService();
 
   public async run(): Promise<void> {
     const {flags} = await this.parse(TrackChanges);
+
+    if (flags.user !== undefined && flags.user.trim() === '') {
+      this.error('User flag cannot be empty');
+    }
 
     try {
       const org = await this.orgService.getOrg(flags['target-org']);
@@ -44,8 +50,9 @@ export default class TrackChanges extends Command {
         this.log(this.displayService.formatJson(changes));
       } else if (flags.output === 'html') {
         const html = this.displayService.formatHtml(changes);
-        const fileName = 'metadata-changes-report.html';
-        await fs.writeFile(fileName, html);
+        const timestamp = new Date().toISOString().replaceAll(':', '-').replaceAll('.', '-');
+        const fileName = flags['out-file'] ?? `metadata-changes-${timestamp}.html`;
+        await this.writeFile(fileName, html);
         this.log(`HTML report generated: ${fileName}`);
         this.openFile(fileName);
       } else {
@@ -60,26 +67,33 @@ export default class TrackChanges extends Command {
     }
   }
 
+  public async writeFile(path: string, content: string): Promise<void> {
+    await fs.writeFile(path, content);
+  }
+
   private openFile(filePath: string): void {
     let command = '';
     switch (process.platform) {
-      case 'darwin':
+      case 'darwin': {
         command = `open "${filePath}"`;
         break;
-      case 'win32':
+      }
+
+      case 'win32': {
         command = `start "" "${filePath}"`;
         break;
-      default:
+      }
+
+      default: {
         command = `xdg-open "${filePath}"`;
         break;
+      }
     }
-    
+
     // Execute command but don't wait/block
     exec(command, (error) => {
       if (error) {
         // Just log debug if it fails, don't crash
-        // console.debug('Failed to open file:', error); 
-        // We might want to warn the user but for now silence is safer for CI/headless
       }
     });
   }

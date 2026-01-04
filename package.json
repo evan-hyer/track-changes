@@ -1,7 +1,7 @@
 {
   "name": "@evan-hyer/track-changes",
   "description": "Salesforce CLI plugin to track metadata changes.",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Evan Hyer",
   "publishConfig": {
     "access": "public"

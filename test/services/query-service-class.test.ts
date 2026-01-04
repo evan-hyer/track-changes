@@ -1,9 +1,9 @@
 import {Connection} from '@salesforce/core';
 import {expect} from 'chai';
-import {createSandbox, SinonSandbox, SinonStub, match} from 'sinon';
+import {createSandbox, match, SinonSandbox, SinonStub} from 'sinon';
 
 import {QueryService} from '../../src/services/query-service-class.js';
-import {SourceMember} from '../../src/services/query-service.js';
+import {SourceMember} from '../../src/services/types.js';
 
 describe('QueryService Class', () => {
   let sandbox: SinonSandbox;
@@ -86,6 +86,56 @@ describe('QueryService Class', () => {
      // Find the SourceMember call
      const sourceMemberCallArgs = queryStub.getCalls().find(call => call.args[0].includes('FROM SourceMember'))?.args[0];
      
-     expect(sourceMemberCallArgs).to.contain("WHERE ChangedBy = '005Target'");
-   });
-});
+          
+     
+          expect(sourceMemberCallArgs).to.contain("WHERE ChangedBy = '005Target'");
+     
+        });
+     
+     
+     
+        it('should handle missing ChangedBy info gracefully', async () => {
+     
+         const mockSourceMembers: SourceMember[] = [
+     
+           {
+     
+             ChangedBy: null,
+     
+             MemberName: 'MyClass',
+     
+             MemberType: 'ApexClass',
+     
+             RevisionCounter: 1,
+     
+             SystemModstamp: '2023-01-01T10:00:00.000+0000',
+     
+           },
+     
+         ];
+     
+     
+     
+         const queryStub = mockConnection.tooling.query as SinonStub;
+     
+         queryStub.withArgs(match(/FROM SourceMember/)).resolves({
+     
+           done: true, records: mockSourceMembers, totalSize: 1,
+     
+         });
+     
+     
+     
+         const changes = await queryService.queryChanges();
+     
+     
+     
+         expect(changes).to.have.lengthOf(1);
+     
+         expect(changes[0].modifiedBy).to.equal('Unknown');
+     
+       });
+     
+     });
+     
+     

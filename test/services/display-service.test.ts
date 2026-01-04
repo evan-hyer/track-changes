@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 
 import {DisplayService} from '../../src/services/display-service.js';
-import {MetadataChange} from '../../src/services/query-service.js';
+import {MetadataChange} from '../../src/services/types.js';
 
 describe('DisplayService', () => {
   let displayService: DisplayService;
@@ -25,17 +25,25 @@ describe('DisplayService', () => {
     expect(parsed).to.deep.equal(mockChanges);
   });
 
-  it('should return data for table display', () => {
-    // This is a bit abstract, maybe just check if it returns the array as is or formatted
-    const result = displayService.formatTableData(mockChanges);
-    expect(result).to.deep.equal(mockChanges);
-  });
-
   it('should format changes as HTML string', () => {
     const result = displayService.formatHtml(mockChanges);
     expect(result).to.contain('<!DOCTYPE html>');
     expect(result).to.contain('MyClass');
     expect(result).to.contain('John Doe');
     expect(result).to.contain('<table>');
+  });
+
+  it('should escape special characters in HTML output', () => {
+    const changes: MetadataChange[] = [
+      {
+        componentName: '<script>alert("xss")</script>',
+        date: '2023-01-01',
+        modifiedBy: 'Hacker & Co',
+        type: 'ApexClass',
+      },
+    ];
+    const result = displayService.formatHtml(changes);
+    expect(result).to.contain('&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;');
+    expect(result).to.contain('Hacker &amp; Co');
   });
 });
