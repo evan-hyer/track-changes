@@ -37,6 +37,11 @@ track-changes --output html --out-file changes.html
 ---
 
 <!-- toc -->
+* [Install globally](#install-globally)
+* [See all metadata changes in your default org](#see-all-metadata-changes-in-your-default-org)
+* [Filter by user](#filter-by-user)
+* [Export to JSON (pipe to jq, scripts, etc.)](#export-to-json-pipe-to-jq-scripts-etc)
+* [Generate HTML report](#generate-html-report)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
@@ -72,35 +77,30 @@ USAGE
 
 ## `track-changes`
 
-Track metadata changes in a Salesforce org. Shows component name, type, who modified it, and when.
+Track changes in a Salesforce org
 
 ```
 USAGE
-  $ track-changes  [-f <value>] [-o table|json|html] [-t <value>] [-u <value>]
+  $ track-changes  [--debug] [-n <value>] [-f <value>] [-o table|json|html] [-s <value>] [-t <value>]
+    [-m <value>] [-e <value>] [-u <value>]
 
 FLAGS
+  -e, --until=<value>       Filter changes until this date (YYYY-MM-DD)
   -f, --out-file=<value>    Output filename for HTML report
+  -m, --type=<value>        Filter by member type (comma-separated)
+  -n, --name=<value>        Filter by component name (allows % wildcard)
   -o, --output=<option>     [default: table] Output format
                             <options: table|json|html>
+  -s, --since=<value>       Filter changes since this date (YYYY-MM-DD)
   -t, --target-org=<value>  The alias or username of the org to track changes in
   -u, --user=<value>        Filter changes by the user who made them
+      --debug               Show debug output
 
 DESCRIPTION
-  Track metadata changes in a Salesforce org. Shows component name, type, who modified it, and when.
+  Track changes in a Salesforce org
 
 ALIASES
-  $ track-changes 
-
-EXAMPLES
-  $ track-changes 
-
-  $ track-changes  --user "John Doe"
-
-  $ track-changes  --output json
-
-  $ track-changes  --output html --out-file report.html
-
-  $ track-changes  -t myOrg -u "Admin User" -o json
+  $ track-changes
 ```
 
 ## `track-changes help [COMMAND]`
@@ -415,35 +415,30 @@ _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/
 
 ## `track-changes track`
 
-Track metadata changes in a Salesforce org. Shows component name, type, who modified it, and when.
+Track changes in a Salesforce org
 
 ```
 USAGE
-  $ track-changes track [-f <value>] [-o table|json|html] [-t <value>] [-u <value>]
+  $ track-changes track [--debug] [-n <value>] [-f <value>] [-o table|json|html] [-s <value>] [-t <value>]
+    [-m <value>] [-e <value>] [-u <value>]
 
 FLAGS
+  -e, --until=<value>       Filter changes until this date (YYYY-MM-DD)
   -f, --out-file=<value>    Output filename for HTML report
+  -m, --type=<value>        Filter by member type (comma-separated)
+  -n, --name=<value>        Filter by component name (allows % wildcard)
   -o, --output=<option>     [default: table] Output format
                             <options: table|json|html>
+  -s, --since=<value>       Filter changes since this date (YYYY-MM-DD)
   -t, --target-org=<value>  The alias or username of the org to track changes in
   -u, --user=<value>        Filter changes by the user who made them
+      --debug               Show debug output
 
 DESCRIPTION
-  Track metadata changes in a Salesforce org. Shows component name, type, who modified it, and when.
+  Track changes in a Salesforce org
 
 ALIASES
-  $ track-changes 
-
-EXAMPLES
-  $ track-changes track
-
-  $ track-changes track --user "John Doe"
-
-  $ track-changes track --output json
-
-  $ track-changes track --output html --out-file report.html
-
-  $ track-changes track -t myOrg -u "Admin User" -o json
+  $ track-changes
 ```
 
 _See code: [src/commands/track.ts](https://github.com/evan-hyer/track-changes/blob/v0.1.0/src/commands/track.ts)_

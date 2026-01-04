@@ -6,6 +6,11 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ## Active Tracks
 
+### [ ] Pagination Implementation
+*Status:* Planned  
+*Link:* [./archive/pagination_implementation_20260104/](./archive/pagination_implementation_20260104/)  
+Implement queryMore pagination to handle >2,000 records. Critical data loss fix.
+
 ### [ ] Query Filter Enhancement
 *Status:* Planned  
 *Link:* [./archive/query_filter_enhancement_20260104/](./archive/query_filter_enhancement_20260104/)  

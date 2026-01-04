@@ -2,14 +2,19 @@ name: Publish
 
 on:
   release:
-    types: [released]
+    types: [released, prereleased]
 
 permissions:
   contents: read
   id-token: write
 
 jobs:
+  # Run tests first - must pass before publishing
+  test:
+    uses: ./.github/workflows/test.yml
+
   publish:
+    needs: test  # Only run after tests pass
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,9 +22,18 @@ jobs:
         with:
           node-version: latest
           registry-url: 'https://registry.npmjs.org'
+          cache: npm
       - run: npm install
       - run: npm run build
       - run: npm run prepack
-      - run: npm publish --provenance --access public
+      
+      # Publish with beta tag for prereleases, latest for stable
+      - name: Publish to npm
+        run: |
+          if [ "${{ github.event.release.prerelease }}" == "true" ]; then
+            npm publish --provenance --access public --tag beta
+          else
+            npm publish --provenance --access public
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

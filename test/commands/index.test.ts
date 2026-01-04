@@ -5,7 +5,7 @@ import {createSandbox, match, SinonSandbox, SinonSpyCall, SinonStub} from 'sinon
 
 import TrackChanges from '../../src/commands/track.js';
 import {OrgService} from '../../src/services/org-service.js';
-import {QueryService} from '../../src/services/query-service-class.js';
+import {QueryService} from '../../src/services/query-service.js';
 
 describe('root command', () => {
   let sandbox: SinonSandbox;

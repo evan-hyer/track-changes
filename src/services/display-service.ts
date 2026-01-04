@@ -1,4 +1,5 @@
 import {MetadataChange} from './types.js';
+import {escapeHtml} from './utils.js';
 
 /**
  * Service to handle CLI output display formatting.
@@ -15,10 +16,10 @@ export class DisplayService {
       .map(
         (change) => `
         <tr>
-          <td>${this.escapeHtml(change.componentName)}</td>
-          <td>${this.escapeHtml(change.type)}</td>
-          <td>${this.escapeHtml(change.modifiedBy)}</td>
-          <td>${this.escapeHtml(change.date)}</td>
+          <td>${escapeHtml(change.componentName)}</td>
+          <td>${escapeHtml(change.type)}</td>
+          <td>${escapeHtml(change.modifiedBy)}</td>
+          <td>${escapeHtml(change.date)}</td>
         </tr>`,
       )
       .join('');
@@ -68,18 +69,5 @@ export class DisplayService {
    */
   public formatJson(changes: MetadataChange[]): string {
     return JSON.stringify(changes, null, 2);
-  }
-
-  private escapeHtml(unsafe: null | string | undefined): string {
-    if (!unsafe) {
-      return '';
-    }
-
-    return String(unsafe)
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#039;');
   }
 }

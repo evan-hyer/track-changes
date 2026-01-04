@@ -2,6 +2,7 @@ import {Connection} from '@salesforce/core';
 
 import {SoqlQueryBuilder} from './soql-query-builder.js';
 import {MetadataChange, SourceMember} from './types.js';
+import {sanitizeSoqlString} from './utils.js';
 
 export interface QueryOptions {
   name?: string;
@@ -19,11 +20,11 @@ export class QueryService {
 
     // 1. Resolve Username to ID if provided
     if (options.username) {
-      const sanitizedUsername = this.sanitizeSoqlString(options.username);
+      const sanitizedUsername = sanitizeSoqlString(options.username);
       const userQuery = `SELECT Id FROM User WHERE Name = '${sanitizedUsername}'`;
       const userResult = await this.connection.tooling.query<{Id: string}>(userQuery);
       if (userResult.totalSize === 0) {
-        return [];
+        throw new Error(`User '${options.username}' not found in the org.`);
       }
 
       userIdFilter = userResult.records[0].Id;
@@ -63,15 +64,15 @@ export class QueryService {
     const userIds = [
       ...new Set(
         records
-          .map((r) => (typeof r.ChangedBy === 'string' ? r.ChangedBy : null))
-          .filter(Boolean),
+          .map((r) => r.ChangedBy)
+          .filter((cb): cb is string => typeof cb === 'string'),
       ),
-    ] as string[];
+    ];
 
     const userMap = new Map<string, string>();
 
     if (userIds.length > 0) {
-      const idsString = userIds.map((id) => `'${this.sanitizeSoqlString(id)}'`).join(',');
+      const idsString = userIds.map((id) => `'${sanitizeSoqlString(id)}'`).join(',');
       const nameQuery = `SELECT Id, Name FROM User WHERE Id IN (${idsString})`;
       const nameResult = await this.connection.tooling.query<{Id: string; Name: string}>(nameQuery);
 
@@ -92,7 +93,7 @@ export class QueryService {
         ChangedBy: userName ? {Name: userName} : null,
       };
 
-      return this.mapSourceMemberToChange(mappedRecord as SourceMember);
+      return this.mapSourceMemberToChange(mappedRecord);
     });
   }
 
@@ -112,10 +113,6 @@ export class QueryService {
       modifiedBy,
       type: sourceMember.MemberType,
     };
-  }
-
-  private sanitizeSoqlString(input: string): string {
-    return input.replaceAll('\\', String.raw`\\`).replaceAll("'", String.raw`\'`);
   }
 }
 

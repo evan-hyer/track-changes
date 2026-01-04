@@ -2,10 +2,10 @@ import {Connection} from '@salesforce/core';
 import {expect} from 'chai';
 import {createSandbox, match, SinonSandbox, SinonStub} from 'sinon';
 
-import {QueryService} from '../../src/services/query-service-class.js';
+import {QueryService} from '../../src/services/query-service.js';
 import {SourceMember} from '../../src/services/types.js';
 
-describe('QueryService Class', () => {
+describe('QueryService', () => {
   let sandbox: SinonSandbox;
   let mockConnection: Connection;
   let queryService: QueryService;
@@ -88,6 +88,23 @@ describe('QueryService Class', () => {
      
      expect(sourceMemberCallArgs).to.contain("WHERE ChangedBy = '005Target'");
    });
+
+  it('should throw an error if username provided but not found', async () => {
+    const queryStub = mockConnection.tooling.query as SinonStub;
+    queryStub.withArgs(match(/FROM User/)).resolves({
+      done: true,
+      records: [],
+      totalSize: 0,
+    });
+
+    try {
+      await queryService.queryChanges({username: 'NonExistentUser'});
+      expect.fail('Should have thrown an error');
+    } catch (error) {
+      expect(error).to.be.an.instanceOf(Error);
+      expect((error as Error).message).to.contain("User 'NonExistentUser' not found");
+    }
+  });
 
    it('should filter by member types', async () => {
     const queryStub = mockConnection.tooling.query as SinonStub;

@@ -4,12 +4,15 @@ import * as fs from 'node:fs/promises';
 
 import {DisplayService} from '../services/display-service.js';
 import {OrgService} from '../services/org-service.js';
-import {QueryService} from '../services/query-service-class.js';
+import {QueryService} from '../services/query-service.js';
 
 export default class TrackChanges extends Command {
   static aliases = [''];
   static description = 'Track changes in a Salesforce org';
   static flags = {
+    debug: Flags.boolean({
+      description: 'Show debug output',
+    }),
     name: Flags.string({
       char: 'n',
       description: 'Filter by component name (allows % wildcard)',
@@ -115,7 +118,7 @@ export default class TrackChanges extends Command {
     // Execute command but don't wait/block
     exec(command, (error) => {
       if (error) {
-        // Just log debug if it fails, don't crash
+        this.debug(`Failed to open file: ${error.message}`);
       }
     });
   }

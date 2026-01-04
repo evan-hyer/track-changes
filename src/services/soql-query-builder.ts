@@ -1,3 +1,5 @@
+import {sanitizeSoqlString} from './utils.js';
+
 interface QueryFilter {
   field: string;
   operator: string;
@@ -30,14 +32,14 @@ export class SoqlQueryBuilder {
     this.filters.push({
       field: 'SystemModstamp',
       operator: '>=',
-      value: `'${this.sanitize(start)}'`,
+      value: `'${sanitizeSoqlString(start)}'`,
     });
 
     if (end) {
       this.filters.push({
         field: 'SystemModstamp',
         operator: '<=',
-        value: `'${this.sanitize(end)}'`,
+        value: `'${sanitizeSoqlString(end)}'`,
       });
     }
 
@@ -48,7 +50,7 @@ export class SoqlQueryBuilder {
     this.filters.push({
       field: 'MemberName',
       operator: 'LIKE',
-      value: `'${this.sanitize(name)}'`,
+      value: `'${sanitizeSoqlString(name)}'`,
     });
     return this;
   }
@@ -58,7 +60,7 @@ export class SoqlQueryBuilder {
       return this;
     }
 
-    const value = `(${types.map((t) => `'${this.sanitize(t)}'`).join(',')})`;
+    const value = `(${types.map((t) => `'${sanitizeSoqlString(t)}'`).join(',')})`;
     this.filters.push({
       field: 'MemberType',
       operator: 'IN',
@@ -71,12 +73,8 @@ export class SoqlQueryBuilder {
     this.filters.push({
       field: 'ChangedBy',
       operator: '=',
-      value: `'${this.sanitize(userId)}'`,
+      value: `'${sanitizeSoqlString(userId)}'`,
     });
     return this;
-  }
-
-  private sanitize(input: string): string {
-    return input.replaceAll('\\', String.raw`\\`).replaceAll("'", String.raw`\'`);
   }
 }
